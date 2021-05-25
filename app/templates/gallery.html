@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Gallery</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-black font-serif">
+    <form class="gap-0 grid grid-flow-row grid-cols-2 md:grid-cols-8 lg:grid-cols-10 items-center" method="post">
+        {% for userID in userids: %}
+
+        {% if userID == selected_user_id %}
+        {% set activecolor = "bg-yellow-400" %}
+        {% else %}
+        {% set activecolor = "" %}
+        {% endif %}
+
+        <figure class="group flex flex-col p-4 place-items-center hover:bg-yellow-500 {{activecolor}} ">
+
+            <img class="w-32 h-32 rounded-full " src=static_faces/face_{{userID}}.jpg>
+            <input
+                class="flex flex-col justify-items-center appearance-none group-hover:bg-yellow-600 bg-black text-white w-16 rounded-md shadow-lg"
+                type='submit' name='user_id' value={{userID}}>
+        </figure>
+        {% endfor %}
+    </form>
+
+    <p class=" text-lg text-gray-100 font-semibold">Showing Gallery of user:</p>
+    <p class="text-lg text-gray-600"> {{ selected_user_id }} </p>
+    <div class="grid grid-flow-row grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 place-items-center">
+        {% for file in user_rec_dict[selected_user_id]: %}
+        <img class="h-auto w-auto rounded-lg shadow-2xl" src=static_sm/{{file}}>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

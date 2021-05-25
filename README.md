@@ -36,7 +36,7 @@ Spawn a shell inside the virtual environment with
 
 Start a development server locally
 
-        poetry run uvicorn app.main:app --reload --host localhost --port 8000
+        poetry run uvicorn --reload --host=0.0.0.0 --port=8000 app.main:app
 
 API will be available at [localhost:8000/](http://localhost:8000/)
 

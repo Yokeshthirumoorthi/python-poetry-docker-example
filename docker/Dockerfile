@@ -25,6 +25,9 @@ RUN apt-get update \
         curl \
         build-essential
 
+RUN apt-get update \
+    && apt-get install -y libvips-dev
+
 # Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
 ENV POETRY_VERSION=1.1.6
 RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
@@ -33,7 +36,7 @@ RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poet
 # and install only runtime deps using poetry
 WORKDIR $PYSETUP_PATH
 COPY ./poetry.lock ./pyproject.toml ./
-RUN poetry install --no-dev  # respects 
+RUN poetry install --no-dev  # respects
 
 
 # 'development' stage installs all dev deps and can be used to develop code.
@@ -59,6 +62,7 @@ COPY . .
 EXPOSE 8000
 ENTRYPOINT /docker-entrypoint.sh $0 $@
 CMD ["poetry", "run", "uvicorn", "--reload", "--host=0.0.0.0", "--port=8000", "app.main:app"]
+# poetry run uvicorn --reload --host=0.0.0.0 --port=8000 app.main:app
 
 # 'lint' stage runs black and isort
 # running in check mode means build will fail if any linting errors occur
