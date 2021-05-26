@@ -46,7 +46,8 @@ def get_gallery(request, selected_user_id, user_rec_dict):
 
 # Album specific logic below; serving logic above
 photo_dict = None
-user_rec_dict: dict[int, List[str]] = {}
+user_rec_dict = {}
+# user_rec_dict: dict[int, List[str]] = {} 
 
 
 def get_photo_dict():
