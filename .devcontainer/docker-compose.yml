@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  app:
+    build: 
+      context: ../
+      dockerfile: Dockerfile
+      # [Optional] You can use build args to set options. e.g. 'VARIANT' below affects the image in the Dockerfile
+      args: 
+        # Update 'VARIANT' to pick a Python version: 3, 3.6, 3.7, 3.8, 3.9
+        VARIANT: "3.8"
+        # Options
+        INSTALL_NODE: "false"
+        NODE_VERSION: "lts/*"
+    ports:
+      - "8000:8000"
+    # volumes:
+    #     # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
+    #     - ..:/workspace:cached
+    command: /bin/sh -c "poetry run uvicorn --reload --host=0.0.0.0 --port=8000 app.main:app"  

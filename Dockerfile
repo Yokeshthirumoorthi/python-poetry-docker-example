@@ -48,28 +48,17 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_IN_PROJECT=false \
     POETRY_NO_INTERACTION=1 
 
-# ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
-
-# Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
 ENV POETRY_VERSION=1.1.6
+
 RUN pip install "poetry==$POETRY_VERSION"
-# RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
 
-# [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
-# COPY requirements.txt /tmp/pip-tmp/
-# RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-#     && rm -rf /tmp/pip-tmp
-
-COPY ./poetry.lock ./pyproject.toml ./    
+COPY . .
 RUN poetry install
 
 EXPOSE 8000
-
-CMD ["poetry", "run", "uvicorn", "--reload", "--host=0.0.0.0", "--port=8000", "app.main:app"]
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1

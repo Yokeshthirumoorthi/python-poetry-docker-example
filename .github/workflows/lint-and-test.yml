@@ -1,13 +1,13 @@
-name: Python package
+# name: Python package
 
-on: [push]
+# on: [push]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
+#     steps:
+#     - uses: actions/checkout@v2
 
-    - name: Build
-      run: docker build --tag poetry-project --file docker/Dockerfile .
+#     - name: Build
+#       run: docker build --tag poetry-project --file docker/Dockerfile .
